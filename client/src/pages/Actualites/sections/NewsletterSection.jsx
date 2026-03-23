@@ -15,10 +15,20 @@ export default function NewsletterSection() {
     if (!email.includes('@')) { setError('Adresse email invalide.'); return }
     setError('')
     setLoading(true)
-    // Simuler un appel API — remplacer par fetch('/api/newsletter', { method:'POST', body: JSON.stringify({ email }) })
-    await new Promise((r) => setTimeout(r, 1000))
-    setSent(true)
-    setLoading(false)
+    try {
+      const res = await fetch('/api/newsletter', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Erreur serveur.')
+      setSent(true)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

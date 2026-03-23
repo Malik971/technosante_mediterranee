@@ -1,180 +1,283 @@
-import { Check, Sparkles } from 'lucide-react'
+import { useState } from 'react'
+import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react'
 import { useScrollReveal } from '../../../hooks/useScrollReveal'
-import { CONTRATS } from '../../../constants/siteData'
+import { AGENCES, SITE } from '../../../constants/siteData'
 import Tag from '../../../components/ui/Tag'
-import Button from '../../../components/ui/Button'
 
-const CONTRAT_STYLES = {
-  sable: {
-    headerBg: 'linear-gradient(135deg,#F9F2E8,#FDFAF6)',
-    headerColor: '#745C3A',
-    checkBg: 'rgba(97,122,54,0.10)',
-    checkColor: '#617A36',
-    border: 'rgba(232,213,200,0.8)',
-    tag: 'neutral',
-  },
-  mer: {
-    headerBg: 'linear-gradient(135deg,#D0E8F4,#A0CDE6)',
-    headerColor: '#0A5580',
-    checkBg: 'rgba(14,110,158,0.10)',
-    checkColor: '#0E6E9E',
-    border: 'rgba(14,110,158,0.20)',
-    tag: 'mer',
-  },
-  terra: {
-    headerBg: 'linear-gradient(135deg,#C95C35,#A54428)',
-    headerColor: '#fff',
-    checkBg: 'rgba(201,92,53,0.10)',
-    checkColor: '#C95C35',
-    border: 'rgba(201,92,53,0.30)',
-    tag: 'terra',
-  },
+const INITIAL_FORM = {
+  prenom:        '',
+  nom:           '',
+  email:         '',
+  telephone:     '',
+  etablissement: '',
+  message:       '',
 }
 
-function ContratCard({ contrat, index }) {
-  const s = CONTRAT_STYLES[contrat.color] ?? CONTRAT_STYLES.sable
+export default function ContactSection() {
+  const ref            = useScrollReveal()
+  const [form, setForm] = useState(INITIAL_FORM)
+  const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  return (
-    <div
-      className={`reveal reveal-delay-${index + 1} relative bg-white rounded-xl3 overflow-hidden flex flex-col transition-all duration-300`}
-      style={{
-        border: contrat.highlighted
-          ? `2px solid rgba(201,92,53,0.40)`
-          : `1px solid ${s.border}`,
-        boxShadow: contrat.highlighted
-          ? '0 12px 48px rgba(201,92,53,0.18), var(--shadow-card)'
-          : 'var(--shadow-card)',
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = contrat.highlighted ? '0 16px 56px rgba(201,92,53,0.24)' : 'var(--shadow-card-hover)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = contrat.highlighted ? '0 12px 48px rgba(201,92,53,0.18)' : 'var(--shadow-card)'; e.currentTarget.style.transform = 'translateY(0)' }}
-    >
-      {/* Badge populaire */}
-      {contrat.highlighted && (
-        <div
-          className="absolute top-4 right-4 flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full text-white"
-          style={{ background: 'linear-gradient(135deg,#C95C35,#A54428)' }}
-        >
-          <Sparkles size={11} aria-hidden="true" />
-          Recommandé
-        </div>
-      )}
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
 
-      {/* Header coloré */}
-      <div className="p-7 pb-6" style={{ background: s.headerBg }}>
-        <p
-          className="text-2xl font-bold mb-1"
-          style={{ fontFamily: 'var(--font-display)', color: s.headerColor }}
-        >
-          {contrat.name}
-        </p>
-        <div className="flex items-baseline gap-1.5 mt-3">
-          <span
-            className="text-3xl font-bold"
-            style={{ fontFamily: 'var(--font-display)', color: s.headerColor }}
-          >
-            {contrat.delay}
-          </span>
-          <span
-            className="text-sm opacity-80"
-            style={{ color: contrat.color === 'terra' ? 'rgba(255,255,255,0.85)' : s.headerColor }}
-          >
-            {contrat.delayType}
-          </span>
-        </div>
-      </div>
-
-      {/* Récap rapide */}
-      <div
-        className="px-7 py-4 grid grid-cols-2 gap-3"
-        style={{ borderBottom: `1px solid ${s.border}`, background: 'rgba(253,250,246,0.5)' }}
-      >
-        {[
-          { label: 'Support',        val: contrat.support },
-          { label: 'Remote',         val: contrat.remote },
-          { label: 'Interlocuteur',  val: contrat.interlocuteur },
-        ].map(({ label, val }) => (
-          <div key={label}>
-            <p className="text-xs text-ardoise-400 font-medium mb-0.5">{label}</p>
-            <p className="text-xs font-semibold text-ardoise-700">{val}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Features */}
-      <div className="p-7 flex-1 flex flex-col">
-        <ul className="space-y-3 mb-8 flex-1" role="list">
-          {contrat.features.map((feat) => (
-            <li key={feat} className="flex items-start gap-3 text-sm text-ardoise-600">
-              <span
-                className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                style={{ background: s.checkBg }}
-                aria-hidden="true"
-              >
-                <Check size={11} style={{ color: s.checkColor }} />
-              </span>
-              {feat}
-            </li>
-          ))}
-        </ul>
-
-        <Button
-          href="/#contact"
-          variant={contrat.highlighted ? 'terra' : 'outlineTerra'}
-          className="w-full justify-center text-sm"
-        >
-          Demander un devis
-        </Button>
-      </div>
-    </div>
-  )
-}
-
-export default function ContratsSection() {
-  const ref = useScrollReveal()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const res = await fetch('/api/contact', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(form),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Erreur serveur.')
+      setSent(true)
+    } catch (err) {
+      alert(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <section
-      className="section-padding"
-      style={{
-        background: 'linear-gradient(160deg, #FEF4EF 0%, #FDFAF6 60%, #EFF7FB 100%)',
-        borderTop: '1px solid rgba(201,92,53,0.08)',
-      }}
+      id="contact"
+      className="section-padding bg-texture-sable"
       ref={ref}
-      aria-label="Contrats de maintenance"
+      aria-label="Contactez-nous"
     >
       <div className="section-inner">
+
+        {/* En-tête */}
         <div className="text-center mb-14">
           <div className="reveal">
-            <Tag variant="terra" className="mb-5">Contrats de maintenance</Tag>
+            <Tag variant="terra" className="mb-5">Contact</Tag>
           </div>
           <h2 className="reveal text-ardoise-800 mb-5">
-            L'assistance qui<br />
+            Un projet ? Une panne ?<br />
             <span
               style={{
-                background: 'linear-gradient(135deg,#C95C35,#F0BC2A)',
+                background: 'linear-gradient(135deg, #C95C35, #F0BC2A)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}
             >
-              correspond à votre pratique.
+              On est là.
             </span>
           </h2>
           <p className="reveal text-ardoise-500 text-lg max-w-xl mx-auto">
-            Choisissez le niveau de couverture adapté à votre cabinet. Sans surprise sur la facture.
+            Rien n'est impossible. Votre besoin a probablement sa solution — il suffit d'en parler.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-7 max-w-4xl mx-auto">
-          {CONTRATS.map((contrat, i) => (
-            <ContratCard key={contrat.id} contrat={contrat} index={i} />
-          ))}
-        </div>
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
 
-        {/* Note en bas */}
-        <p className="reveal text-center text-sm text-ardoise-400 mt-8 max-w-lg mx-auto">
-          Tous les contrats incluent l'accès à RALF et TeamViewer. Tarifs sur devis selon la taille du cabinet et le nombre de postes.
-        </p>
+          {/* ── Colonne gauche — infos ── */}
+          <div className="lg:col-span-2 space-y-6">
+
+            {/* Réponse rapide */}
+            <div
+              className="reveal rounded-xl2 p-5"
+              style={{
+                background: 'linear-gradient(135deg, rgba(201,92,53,0.07), rgba(240,188,42,0.05))',
+                border: '1px solid rgba(201,92,53,0.16)',
+              }}
+            >
+              <p className="font-semibold text-ardoise-800 text-sm mb-2">⚡ Urgence technique ?</p>
+              <p className="text-ardoise-500 text-sm mb-3">
+                Appelez directement notre hotline. Un technicien prend en charge et peut intervenir à distance en quelques minutes.
+              </p>
+              <a
+                href={`tel:${AGENCES[0].phoneRaw}`}
+                className="inline-flex items-center gap-2 text-sm font-bold text-terra-600 hover:text-terra-700 transition-colors"
+              >
+                <Phone size={15} />
+                {AGENCES[0].phone}
+              </a>
+            </div>
+
+            {/* Coordonnées */}
+            {AGENCES.map((agence) => (
+              <div
+                key={agence.id}
+                className="reveal bg-white rounded-xl2 p-5"
+                style={{ border: '1px solid rgba(232,213,200,0.7)', boxShadow: 'var(--shadow-card)' }}
+              >
+                <p className="font-semibold text-ardoise-800 text-sm mb-3">{agence.city}</p>
+                <div className="space-y-2">
+                  <a href={`tel:${agence.phoneRaw}`} className="flex items-center gap-2 text-sm text-ardoise-500 hover:text-terra-600 transition-colors">
+                    <Phone size={13} style={{ color: '#C95C35' }} /> {agence.phone}
+                  </a>
+                  <a href={`mailto:${agence.email}`} className="flex items-center gap-2 text-sm text-ardoise-500 hover:text-mer-600 transition-colors">
+                    <Mail size={13} style={{ color: '#0E6E9E' }} /> {agence.email}
+                  </a>
+                  <p className="flex items-start gap-2 text-sm text-ardoise-400">
+                    <MapPin size={13} className="mt-0.5 flex-shrink-0" style={{ color: '#C95C35' }} />
+                    {agence.address}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Colonne droite — formulaire ── */}
+          <div className="lg:col-span-3 reveal">
+            <div
+              className="bg-white rounded-xl3 p-8 md:p-10"
+              style={{ border: '1px solid rgba(201,92,53,0.12)', boxShadow: '0 8px 40px rgba(44,30,16,0.08)' }}
+            >
+              {sent ? (
+                /* ── Confirmation envoi ── */
+                <div className="text-center py-10">
+                  <div
+                    className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5"
+                    style={{ background: 'linear-gradient(135deg,#EFF2E5,#D5DDC0)' }}
+                    aria-hidden="true"
+                  >
+                    <CheckCircle size={32} style={{ color: '#617A36' }} />
+                  </div>
+                  <h3 className="text-ardoise-800 mb-3">Message envoyé !</h3>
+                  <p className="text-ardoise-500 text-sm">
+                    Merci pour votre message. Notre équipe vous répondra dans les 24h ouvrées.
+                  </p>
+                </div>
+              ) : (
+                /* ── Formulaire ── */
+                <form onSubmit={handleSubmit} noValidate aria-label="Formulaire de contact">
+
+                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                    <div>
+                      <label htmlFor="prenom" className="block text-xs font-semibold uppercase tracking-wider text-ardoise-400 mb-1.5">
+                        Prénom *
+                      </label>
+                      <input
+                        id="prenom"
+                        name="prenom"
+                        type="text"
+                        required
+                        placeholder="Jean"
+                        value={form.prenom}
+                        onChange={handleChange}
+                        className="input-med"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="nom" className="block text-xs font-semibold uppercase tracking-wider text-ardoise-400 mb-1.5">
+                        Nom *
+                      </label>
+                      <input
+                        id="nom"
+                        name="nom"
+                        type="text"
+                        required
+                        placeholder="Martin"
+                        value={form.nom}
+                        onChange={handleChange}
+                        className="input-med"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-5">
+                    <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-ardoise-400 mb-1.5">
+                      Email professionnel *
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="dr.martin@cabinet.fr"
+                      value={form.email}
+                      onChange={handleChange}
+                      className="input-med"
+                    />
+                  </div>
+
+                  <div className="mb-5">
+                    <label htmlFor="telephone" className="block text-xs font-semibold uppercase tracking-wider text-ardoise-400 mb-1.5">
+                      Téléphone
+                    </label>
+                    <input
+                      id="telephone"
+                      name="telephone"
+                      type="tel"
+                      placeholder="06 00 00 00 00"
+                      value={form.telephone}
+                      onChange={handleChange}
+                      className="input-med"
+                    />
+                  </div>
+
+                  <div className="mb-5">
+                    <label htmlFor="etablissement" className="block text-xs font-semibold uppercase tracking-wider text-ardoise-400 mb-1.5">
+                      Type d'établissement *
+                    </label>
+                    <select
+                      id="etablissement"
+                      name="etablissement"
+                      required
+                      value={form.etablissement}
+                      onChange={handleChange}
+                      className="input-med"
+                    >
+                      <option value="">Choisissez...</option>
+                      <option value="cabinet">Cabinet médical</option>
+                      <option value="dentaire">Centre dentaire</option>
+                      <option value="ehpad">EHPAD</option>
+                      <option value="msp">Maison de Santé Pluridisciplinaire</option>
+                      <option value="clinique">Clinique / Hôpital</option>
+                      <option value="autre">Autre établissement de santé</option>
+                    </select>
+                  </div>
+
+                  <div className="mb-7">
+                    <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-ardoise-400 mb-1.5">
+                      Votre message *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={4}
+                      placeholder="Décrivez votre besoin ou votre problème..."
+                      value={form.message}
+                      onChange={handleChange}
+                      className="input-med resize-y"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="btn-terra w-full text-base justify-center"
+                    aria-label="Envoyer ma demande"
+                  >
+                    {loading ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+                        Envoi en cours…
+                      </>
+                    ) : (
+                      <>
+                        <Send size={17} />
+                        Envoyer ma demande
+                      </>
+                    )}
+                  </button>
+
+                  <p className="text-xs text-center text-ardoise-400 mt-4">
+                    Réponse garantie sous 24h · Données confidentielles · Aucun démarchage
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )

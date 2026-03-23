@@ -5,27 +5,7 @@ node_modules/
 dist/
 build/
 
-# Cache
-.vite/
-.cache/
-*.log
-
 # Environment variables
 .env
 .env.local
 .env.*.local
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
-# Tests / coverage
-coverage/
-
-# Misc
-*.tmp
-*.swp
