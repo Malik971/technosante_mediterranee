@@ -1,0 +1,352 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS — Méditerranée 2026
+═══════════════════════════════════════════════ */
+:root {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Couleurs principales */
+  --color-terra:    #C95C35;
+  --color-mer:      #0E6E9E;
+  --color-sable:    #FDFAF6;
+  --color-soleil:   #F0BC2A;
+  --color-garrigue: #8B74CA;
+  --color-ardoise:  #2C1E10;
+
+  /* Ombres douces */
+  --shadow-card:      0 2px 20px rgba(44,30,16,0.08), 0 1px 4px rgba(44,30,16,0.04);
+  --shadow-card-hover:0 8px 40px rgba(44,30,16,0.12), 0 2px 8px rgba(44,30,16,0.06);
+  --shadow-terra:     0 6px 28px rgba(201,92,53,0.28);
+  --shadow-mer:       0 6px 28px rgba(14,110,158,0.22);
+}
+
+/* ═══════════════════════════════════════════════
+   BASE RESET & GLOBALS
+═══════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #FDFAF6;
+  color: #2C1E10;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #2C1E10;
+}
+
+h1 { font-size: clamp(2.4rem, 5vw, 4rem);   font-weight: 700; }
+h2 { font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 700; }
+h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); font-weight: 600; }
+
+p {
+  color: #5A4428;
+  line-height: 1.75;
+}
+
+/* ═══════════════════════════════════════════════
+   SCROLLBAR CUSTOM
+═══════════════════════════════════════════════ */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: #F9F2E8; }
+::-webkit-scrollbar-thumb { background: #C95C35; border-radius: 3px; }
+
+/* ═══════════════════════════════════════════════
+   COMPOSANTS UTILITAIRES
+═══════════════════════════════════════════════ */
+@layer components {
+
+  /* ── Divider décoratif ── */
+  .divider-warm {
+    @apply w-full h-px;
+    background: linear-gradient(90deg, transparent, rgba(201,92,53,0.2), transparent);
+  }
+
+  /* ── Section padding standard ── */
+  .section-padding {
+    @apply py-20 md:py-28 px-6;
+  }
+
+  .section-inner {
+    @apply max-w-6xl mx-auto;
+  }
+
+  /* ── Fond texturé sable ── */
+  .bg-texture-sable {
+    background-color: #FDFAF6;
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(201,92,53,0.05) 0%, transparent 40%),
+      radial-gradient(circle at 80% 20%, rgba(14,110,158,0.04) 0%, transparent 40%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C95C35' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ── Fond doux mer ── */
+  .bg-mer-soft {
+    background: linear-gradient(135deg, #EFF7FB 0%, #D0E8F4 50%, #EFF7FB 100%);
+  }
+
+  /* ── Fond terra soft ── */
+  .bg-terra-soft {
+    background: linear-gradient(135deg, #FEF4EF 0%, #FDE0D0 50%, #FEF4EF 100%);
+  }
+
+  /* ── Card méditerranéen ── */
+  .card-med {
+    @apply bg-white rounded-xl3 border border-sable-200 transition-all duration-300;
+    box-shadow: var(--shadow-card);
+  }
+  .card-med:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+  }
+
+  /* ── Badge / Tag ── */
+  .badge {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full;
+  }
+  .badge-terra {
+    @apply badge bg-terra-100 text-terra-600 border border-terra-200;
+  }
+  .badge-mer {
+    @apply badge bg-mer-100 text-mer-600 border border-mer-200;
+  }
+  .badge-soleil {
+    @apply badge bg-soleil-100 text-soleil-600 border border-soleil-200;
+  }
+
+  /* ── Bouton principal (terracotta) ── */
+  .btn-terra {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl
+           font-semibold text-white text-sm transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-terra-400 focus:ring-offset-2;
+    background: linear-gradient(135deg, #C95C35 0%, #A54428 100%);
+    box-shadow: var(--shadow-terra);
+  }
+  .btn-terra:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(201,92,53,0.38);
+  }
+  .btn-terra:active {
+    transform: translateY(0);
+  }
+
+  /* ── Bouton secondaire (mer) ── */
+  .btn-mer {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl
+           font-semibold text-white text-sm transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-mer-400 focus:ring-offset-2;
+    background: linear-gradient(135deg, #2088BF 0%, #0A5580 100%);
+    box-shadow: var(--shadow-mer);
+  }
+  .btn-mer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(14,110,158,0.35);
+  }
+
+  /* ── Bouton outline terra ── */
+  .btn-outline-terra {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl
+           font-semibold text-terra-600 text-sm border-2 border-terra-300
+           transition-all duration-200 bg-transparent
+           hover:bg-terra-50 hover:border-terra-500
+           focus:outline-none focus:ring-2 focus:ring-terra-400 focus:ring-offset-2;
+  }
+
+  /* ── Input ── */
+  .input-med {
+    @apply w-full px-4 py-3 rounded-xl border border-sable-300 bg-white text-ardoise-800
+           placeholder-ardoise-300 text-sm font-body
+           transition-all duration-200
+           focus:outline-none focus:border-terra-400 focus:ring-2 focus:ring-terra-100;
+  }
+
+  /* ── Révélation au scroll ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── Icon container ── */
+  .icon-container-terra {
+    @apply w-12 h-12 rounded-xl2 flex items-center justify-center flex-shrink-0;
+    background: linear-gradient(135deg, #FDE0D0, #FAC0A0);
+    color: #C95C35;
+  }
+  .icon-container-mer {
+    @apply w-12 h-12 rounded-xl2 flex items-center justify-center flex-shrink-0;
+    background: linear-gradient(135deg, #D0E8F4, #A0CDE6);
+    color: #0E6E9E;
+  }
+  .icon-container-soleil {
+    @apply w-12 h-12 rounded-xl2 flex items-center justify-center flex-shrink-0;
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    color: #D4A010;
+  }
+  .icon-container-garrigue {
+    @apply w-12 h-12 rounded-xl2 flex items-center justify-center flex-shrink-0;
+    background: linear-gradient(135deg, #EDE8F5, #D8CEEE);
+    color: #6B54AA;
+  }
+
+  /* ── Separator ondulatoire ── */
+  .wave-sep {
+    position: relative;
+    overflow: hidden;
+  }
+  .wave-sep::after {
+    content: '';
+    display: block;
+    height: 60px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23FDFAF6' d='M0,30 C360,60 720,0 1080,30 C1260,45 1380,35 1440,30 L1440,60 L0,60 Z'/%3E%3C/svg%3E") no-repeat bottom;
+    background-size: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS SPÉCIALES
+═══════════════════════════════════════════════ */
+
+/* Shimmer sur les titres */
+.text-shimmer {
+  background: linear-gradient(
+    120deg,
+    #C95C35 0%,
+    #F0BC2A 40%,
+    #C95C35 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-text 3s linear infinite;
+}
+
+@keyframes shimmer-text {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Pulse doux sur les CTA urgence */
+@keyframes pulse-terra {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,92,53,0.4); }
+  50%       { box-shadow: 0 0 0 10px rgba(201,92,53,0); }
+}
+.pulse-terra {
+  animation: pulse-terra 2s ease-in-out infinite;
+}
+
+/* Ornement losange décoratif */
+.ornament {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #C95C35;
+  transform: rotate(45deg);
+  vertical-align: middle;
+  margin: 0 8px;
+}
+
+/* Ligne décorative sous titre */
+.title-underline {
+  position: relative;
+  display: inline-block;
+}
+.title-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, #C95C35, #F0BC2A);
+  border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════════ */
+.navbar-glass {
+  background: rgba(253,250,246,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(201,92,53,0.10);
+}
+
+/* ═══════════════════════════════════════════════
+   HERO — forme organiques
+═══════════════════════════════════════════════ */
+.hero-blob {
+  position: absolute;
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+  filter: blur(60px);
+  animation: morph 10s ease-in-out infinite;
+}
+@keyframes morph {
+  0%,100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+  33%      { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; }
+  66%      { border-radius: 70% 30% 50% 50% / 40% 70% 30% 60%; }
+}
+
+/* ═══════════════════════════════════════════════
+   SERVICE CARDS
+═══════════════════════════════════════════════ */
+.service-card-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(201,92,53,0.04), rgba(14,110,158,0.04));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.service-card-hover:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════
+   STAT COUNTER
+═══════════════════════════════════════════════ */
+.stat-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #C95C35;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+.footer-bg {
+  background: linear-gradient(180deg, #3E2E18 0%, #2C1E10 60%, #1A1008 100%);
+}
