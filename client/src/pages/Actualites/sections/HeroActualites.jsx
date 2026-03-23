@@ -1,4 +1,5 @@
 import { ArrowRight, Calendar, Clock, Rss } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { ARTICLES } from '../../../constants/siteData'
 import Tag from '../../../components/ui/Tag'
 
@@ -75,12 +76,14 @@ export default function HeroActualites() {
         <div className="grid lg:grid-cols-3 gap-6 pb-0">
 
           {/* ── Article à la une — grande carte ── */}
-          <article
-            className="animate-fade-up lg:col-span-2 group relative rounded-xl3 overflow-hidden cursor-pointer transition-all duration-300"
+          <Link
+            to={`/actualites/${featured.slug}`}
+            className="animate-fade-up lg:col-span-2 group relative rounded-xl3 overflow-hidden transition-all duration-300"
             style={{
               border: '1px solid rgba(201,92,53,0.18)',
               boxShadow: 'var(--shadow-card)',
               animationDelay: '0.15s',
+              textDecoration: 'none',
             }}
             onMouseEnter={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
             onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-card)';       e.currentTarget.style.transform = 'translateY(0)' }}
@@ -139,18 +142,20 @@ export default function HeroActualites() {
                 <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </span>
             </div>
-          </article>
+          </Link>
 
           {/* ── Colonne 3 articles récents ── */}
           <div className="flex flex-col gap-4">
             {recents.map((article, i) => (
-              <article
+              <Link
                 key={article.id}
-                className={`animate-fade-up group bg-white rounded-xl2 overflow-hidden flex gap-4 p-5 cursor-pointer transition-all duration-200`}
+                to={`/actualites/${article.slug}`}
+                className={`animate-fade-up group bg-white rounded-xl2 overflow-hidden flex gap-4 p-5 transition-all duration-200`}
                 style={{
                   border: '1px solid rgba(232,213,200,0.7)',
                   boxShadow: 'var(--shadow-card)',
                   animationDelay: `${0.2 + i * 0.08}s`,
+                  textDecoration: 'none',
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)'; e.currentTarget.style.transform = 'translateX(3px)' }}
                 onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-card)';       e.currentTarget.style.transform = 'translateX(0)' }}
@@ -179,7 +184,7 @@ export default function HeroActualites() {
                   </h3>
                   <p className="text-ardoise-400 text-xs">{formatDate(article.date)}</p>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>

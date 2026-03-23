@@ -1,4 +1,5 @@
 import { Calendar, Clock, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 // Map catégorie → couleur tag
 const TAG_VARIANT = {
@@ -40,12 +41,14 @@ export default function ArticleCard({ article, delay = 0 }) {
   const tagStyle   = TAG_STYLES[tagVariant]
 
   return (
-    <article
-      className="reveal group bg-white rounded-xl3 overflow-hidden flex flex-col cursor-pointer transition-all duration-300"
+    <Link
+      to={`/actualites/${article.slug}`}
+      className="reveal group bg-white rounded-xl3 overflow-hidden flex flex-col transition-all duration-300"
       style={{
         border: '1px solid rgba(232,213,200,0.7)',
         boxShadow: 'var(--shadow-card)',
         transitionDelay: `${delay}ms`,
+        textDecoration: 'none',
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)'
@@ -137,6 +140,6 @@ export default function ArticleCard({ article, delay = 0 }) {
           />
         </span>
       </div>
-    </article>
+    </Link>
   )
 }

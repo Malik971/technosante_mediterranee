@@ -61,13 +61,14 @@ export default function EquipeSection() {
           </div>
 
           {/* Badge placeholder */}
-          <div
+        // TODO - remplacer par une vraie photo d'équipe large (peut-être en extérieur, pour éviter les visages trop petits)
+          {/* <div
             className="absolute top-4 right-4 text-xs font-semibold px-2.5 py-1.5 rounded-lg opacity-70"
             style={{ background: 'rgba(0,0,0,0.45)', color: 'white', backdropFilter: 'blur(4px)' }}
             aria-hidden="true"
           >
             📷 Photo à remplacer
-          </div>
+          </div> */}
         </div>
 
         {/* En-tête */}

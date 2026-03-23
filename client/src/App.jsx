@@ -5,6 +5,7 @@ import HomePage      from './pages/HomePage'
 import QuiSommesNous from './pages/QuiSommesNous'
 import Assistance    from './pages/Assistance'
 import Actualites    from './pages/Actualites'
+import ArticlePage   from './pages/Actualites/ArticlePage'
 
 export default function App() {
   return (
@@ -13,10 +14,11 @@ export default function App() {
         <Navbar />
         <main className="flex-1">
           <Routes>
-            <Route path="/"                element={<HomePage />}      />
-            <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
-            <Route path="/actualites"      element={<Actualites />}    />
-            <Route path="/assistance"      element={<Assistance />}    />
+            <Route path="/"                    element={<HomePage />}      />
+            <Route path="/qui-sommes-nous"     element={<QuiSommesNous />} />
+            <Route path="/actualites"          element={<Actualites />}    />
+            <Route path="/actualites/:slug"    element={<ArticlePage />}   />
+            <Route path="/assistance"          element={<Assistance />}    />
           </Routes>
         </main>
         <Footer />
