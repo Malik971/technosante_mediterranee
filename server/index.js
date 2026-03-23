@@ -9,6 +9,8 @@ const newsletterRouter = require('./routes/newsletter')
 const app  = express()
 const PORT = process.env.PORT || 3001
 
+app.set('trust proxy', 1)
+
 // ── Middlewares ───────────────────────────────────────────────
 app.use(express.json({ limit: '10kb' }))
 
