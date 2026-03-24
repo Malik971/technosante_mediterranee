@@ -97,7 +97,7 @@ export default function Navbar() {
         className={`md:hidden overflow-hidden transition-all duration-300 ${
           open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         } navbar-glass border-t border-terra-100`}
-        aria-hidden={!open}
+        inert={!open ? "" : undefined}
       >
         <nav className="px-6 py-4 flex flex-col gap-1" aria-label="Navigation mobile">
           {NAV_LINKS.map((link) => (
