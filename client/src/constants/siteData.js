@@ -147,7 +147,7 @@ export const PARTNERS = [
 
 export const NAV_LINKS = [
   { label: 'Accueil',         href: '/' },
-  { label: 'Qui sommes-nous', href: '/qui-sommes-nous' },
+  { label: 'Qui-sommes-nous', href: '/qui-sommes-nous' },
   { label: 'Actualités',      href: '/actualites' },
   { label: 'Assistance',      href: '/assistance' },
 ]
