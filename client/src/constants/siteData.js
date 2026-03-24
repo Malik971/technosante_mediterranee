@@ -562,7 +562,7 @@ export const SOCIAL_LINKS = [
   {
     id:    'linkedin',
     label: 'LinkedIn',
-    href:  '#',  // TODO: https://www.linkedin.com/company/technosante-mediterranee
+    href:  'https://www.linkedin.com/company/technosante-med/',
     icon:  'linkedin',
     color: '#0A66C2',
   },
@@ -576,7 +576,7 @@ export const SOCIAL_LINKS = [
   {
     id:    'facebook',
     label: 'Facebook',
-    href:  '#',  // TODO: https://www.facebook.com/technosante.mediterranee
+    href:  'https://www.facebook.com/p/TechnoSant%C3%A9-M%C3%A9diterran%C3%A9e-100068766662254',
     icon:  'facebook',
     color: '#1877F2',
   },

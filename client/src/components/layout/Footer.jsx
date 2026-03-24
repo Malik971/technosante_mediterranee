@@ -112,7 +112,7 @@ export default function Footer() {
                 </li>
                 <li className="flex items-center gap-2 text-sm text-ardoise-300">
                   <Clock size={13} aria-hidden="true" />
-                  Lun–Ven · 9h–18h30
+                  Lun–Ven · 9h–18h
                 </li>
               </ul>
             </div>
