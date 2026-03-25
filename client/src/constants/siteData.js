@@ -58,7 +58,7 @@ export const SERVICES = [
       'Accueil téléphonique professionnel',
     ],
     color: 'terra',
-    href: '#contact',
+    href: '/services/cabinets',
   },
   {
     id:       'dentaires',
@@ -74,8 +74,7 @@ export const SERVICES = [
       'Interlocuteur unique, clés-en-main',
     ],
     color: 'mer',
-    href: '#contact',
-    popular: true,
+    href: '/services/dentaires',
   },
   {
     id:       'etablissements',
@@ -91,9 +90,194 @@ export const SERVICES = [
       'Gestion coordonnée CPTS / MSP',
     ],
     color: 'garrigue',
-    href: '#contact',
+    href: '/services/etablissements',
   },
 ]
+
+// ═══════════════════════════════════════════════
+//  PAGES DÉTAIL SERVICES
+// ═══════════════════════════════════════════════
+export const SERVICES_DETAIL = {
+  cabinets: {
+    id:       'cabinets',
+    color:    'terra',
+    icon:     'stethoscope',
+    title:    'Cabinets Médicaux',
+    subtitle: 'Généralistes & Spécialistes',
+    tagline:  'L\'informatique médicale clés en main, du logiciel au réseau.',
+    intro:    "Qu\'il s\'agisse d\'un cabinet monoposte ou d\'un réseau multi-praticiens, nous prenons en charge l\'intégralité de votre environnement informatique. Vos secrétaires, vos remplaçants et vos internes sont inclus dans notre accompagnement — un seul numéro, un seul interlocuteur.",
+    heroGradient: 'linear-gradient(135deg, #FEF4EF 0%, #FDE0D0 100%)',
+    accentColor: '#C95C35',
+    sections: [
+      {
+        icon: 'monitor',
+        title: 'Logiciels de gestion de cabinet',
+        desc: "Nous sommes distributeurs officiels et mainteneurs agréés des principaux logiciels médicaux du marché : Hellodoc, Medistory, Crossway, Doctolib, Logosw… Mises à jour, paramétrages, formation de votre équipe — tout est inclus. Fini la hotline anonyme : votre technicien connaît votre logiciel et votre configuration.",
+        points: [
+          'Installation, paramétrage et migration de données',
+          'Formation sur site pour médecins, secrétaires et remplaçants',
+          'Mises à jour régulières et gestion des évolutions réglementaires',
+          'Support dédié, joignable directement sur portable (contrat Premium)',
+        ],
+      },
+      {
+        icon: 'wifi',
+        title: 'Télétransmission & SESAM-Vitale',
+        desc: "La télétransmission est au cœur de votre activité. Nous gérons l\'intégralité de votre infrastructure SESAM-Vitale : lecteurs de cartes, paramétrage des flux FSE, gestion des rejets, Tiers Payant. Vous n\'avez pas à vous préoccuper des aspects techniques — nous le faisons pour vous.",
+        points: [
+          'Installation et remplacement des lecteurs de carte Vitale',
+          'Paramétrage du Tiers Payant et des mutuelles',
+          'Traitement des rejets FSE et relances automatiques',
+          'Intégration DMP et messagerie MSSanté',
+        ],
+      },
+      {
+        icon: 'network',
+        title: 'Réseau, postes & infrastructure',
+        desc: "Un cabinet médical, c\'est un réseau. Ordinateurs de consultation, postes de secrétariat, imprimantes, lecteurs, box téléphonie — nous concevons, installons et maintenons l\'ensemble. En cas de panne, nous intervenons en moins de 90 minutes.",
+        points: [
+          'Audit de l\'infrastructure existante et recommandations',
+          'Installation réseau filaire et Wi-Fi sécurisé',
+          'Gestion du parc matériel (ordinateurs, imprimantes, périphériques)',
+          'Sauvegarde automatique quotidienne sur support sécurisé',
+        ],
+      },
+      {
+        icon: 'phone',
+        title: 'Accueil téléphonique professionnel',
+        desc: "Maîtrisez vos coûts de communication et professionnalisez votre accueil. Nous proposons des solutions de téléphonie adaptées aux cabinets médicaux : renvoi d\'appel, messagerie professionnelle, numéro dédié. Vos patients sont bien accueillis, même quand vous êtes en consultation.",
+        points: [
+          'Téléphonie IP adaptée aux cabinets médicaux',
+          'Configuration du renvoi d\'appel et de la messagerie',
+          'Intégration avec votre logiciel de prise de rendez-vous',
+          'Solution de rappel automatique de patients',
+        ],
+      },
+    ],
+    logiciels: ['Hellodoc', 'Medistory', 'Crossway', 'Doctolib', 'Logosw', 'Julie Solutions'],
+    cta: 'Demander un audit gratuit',
+  },
+
+  dentaires: {
+    id:       'dentaires',
+    color:    'mer',
+    icon:     'tooth',
+    title:    'Centres Dentaires',
+    subtitle: 'Dentistes, Orthodontistes, Stomatologues',
+    tagline:  'Informatique, imagerie et connectivité - un seul interlocuteur.',
+    intro:    "Le cabinet dentaire moderne, c\'est bien plus qu\'un ordinateur. Capteurs radios, panoramique, CBCT, logiciel de gestion, télétransmission - nous gérons votre projet de A à Z, sans que vous ayez à jongler entre plusieurs prestataires.",
+    heroGradient: 'linear-gradient(135deg, #EFF7FB 0%, #D0E8F4 100%)',
+    accentColor: '#0E6E9E',
+    sections: [
+      {
+        icon: 'monitor',
+        title: 'Logiciels dentaires spécialisés',
+        desc: "Nous maîtrisons les principaux logiciels du marché dentaire : Julie Solutions, Logos, Dental on Web… Installation, formation, migration et maintenance. Votre équipe prend en main le logiciel rapidement, nous restons disponibles pour tout accompagnement.",
+        points: [
+          'Installation et paramétrage complet du logiciel',
+          'Formation des praticiens, assistantes et secrétaires',
+          'Migration des données depuis votre ancien logiciel',
+          'Gestion des mises à jour et des évolutions réglementaires',
+        ],
+      },
+      {
+        icon: 'scan',
+        title: 'Imagerie numérique - capteurs RX',
+        desc: "Nous assurons l\'installation et l\'intégration de capteurs radio intra-oraux dans votre logiciel dentaire. Compatibilité garantie avec votre chaîne de travail existante. Formation incluse pour vous et votre équipe.",
+        points: [
+          'Capteurs RX intra-oraux : Carestream, Acteon, Dentsply…',
+          'Intégration directe dans votre logiciel dentaire',
+          'Formation à la prise de clichés et à l\'archivage',
+          'Maintenance et remplacement rapide en cas de panne',
+        ],
+      },
+      {
+        icon: 'circle',
+        title: 'Panoramique & CBCT',
+        desc: "L\'installation d\'un panoramique ou d\'un CBCT est un projet structurant pour votre cabinet. Nous vous accompagnons de la préparation du local à la mise en service, en passant par l\'intégration dans votre réseau et votre logiciel.",
+        points: [
+          'Audit de faisabilité technique et conseil matériel',
+          'Installation et raccordement réseau',
+          'Intégration dans le logiciel de gestion du cabinet',
+          'Formation et qualification du personnel',
+        ],
+      },
+      {
+        icon: 'shield',
+        title: 'Conformité & cybersécurité',
+        desc: "Les données de santé bucco-dentaire sont soumises aux mêmes obligations que les données médicales. Nous assurons la sécurisation de votre environnement informatique, la mise en conformité RGPD et la sauvegarde de vos données patients.",
+        points: [
+          'Sauvegarde automatique et chiffrée des données patients',
+          'Mise en conformité RGPD et politique de mot de passe',
+          'Antivirus médical et pare-feu configuré',
+          'Plan de reprise d\'activité en cas d\'incident',
+        ],
+      },
+    ],
+    logiciels: ['Julie Solutions', 'Logos', 'Dental on Web', 'Carestream', 'Acteon', 'Dentsply'],
+    cta: 'Discuter de votre projet',
+  },
+
+  etablissements: {
+    id:       'etablissements',
+    color:    'garrigue',
+    icon:     'building',
+    title:    'Établissements de Santé',
+    subtitle: 'EHPAD, MSP, CPTS, Cliniques',
+    tagline:  'Un interlocuteur unique pour des structures complexes.',
+    intro:    "Dans les établissements de santé collectifs, la coordination informatique est un défi permanent. Plusieurs praticiens, plusieurs logiciels, plusieurs organismes à interfacer — nous simplifions tout ça. Un seul prestataire, des économies assurées, une continuité de service garantie.",
+    heroGradient: 'linear-gradient(135deg, #F4F1FA 0%, #EDE8F5 100%)',
+    accentColor: '#8B74CA',
+    sections: [
+      {
+        icon: 'network',
+        title: 'Infrastructure réseau multi-sites',
+        desc: "Une MSP ou un EHPAD, c\'est un réseau partagé entre plusieurs praticiens, souvent sur plusieurs bâtiments. Nous concevons et déployons des infrastructures réseau robustes, avec segmentation des accès par praticien et sauvegarde centralisée.",
+        points: [
+          'Audit et conception de l\'architecture réseau',
+          'Déploiement réseau filaire et Wi-Fi sécurisé multi-zones',
+          'Gestion des droits d\'accès par praticien ou structure',
+          'Supervision à distance et alertes en temps réel',
+        ],
+      },
+      {
+        icon: 'shield',
+        title: 'Cybersécurité & conformité RGPD',
+        desc: "Les établissements de santé sont des cibles prioritaires des cyberattaques. Nous déployons des solutions de protection adaptées : antivirus, pare-feu, chiffrement des données, plan de reprise d\'activité. Conformité CNIL et HDS assurée.",
+        points: [
+          'Analyse de risques et audit de sécurité',
+          'Déploiement d\'une solution antivirus et EDR centralisée',
+          'Chiffrement des données sensibles et des sauvegardes',
+          'Formation du personnel aux bonnes pratiques cyber',
+        ],
+      },
+      {
+        icon: 'star',
+        title: 'Ségur du Numérique',
+        desc: "Le Ségur du Numérique impose des mises à niveau significatives pour les établissements de santé. Nous gérons l\'intégralité du processus : éligibilité, dossier de financement, déploiement des logiciels référencés, formation des équipes.",
+        points: [
+          'Évaluation de l\'éligibilité aux financements Ségur',
+          'Constitution et suivi du dossier de financement',
+          'Déploiement des logiciels référencés DMP, MSSanté, INS',
+          'Formation des équipes aux nouveaux outils',
+        ],
+      },
+      {
+        icon: 'users',
+        title: 'Coordination CPTS & MSP',
+        desc: "Les Communautés Professionnelles Territoriales de Santé et les Maisons de Santé Pluridisciplinaires ont des besoins spécifiques en termes de partage d\'information et de coordination. Nous mettons en place les outils adaptés à ces nouvelles organisations.",
+        points: [
+          'Messagerie sécurisée inter-praticiens (MSSanté)',
+          'Partage de dossiers patients entre praticiens de la CPTS',
+          'Outils de coordination et de planification partagée',
+          'Intégration avec le DMP et les systèmes régionaux',
+        ],
+      },
+    ],
+    logiciels: ['Mediboard', 'NetSoins', 'CPAM', 'ASIP Santé', 'MSSanté', 'DMP'],
+    cta: 'Évaluer votre projet',
+  },
+}
 
 export const WHY_US = [
   {
