@@ -1,0 +1,116 @@
+// Prisma schema — TechnoSanté Méditerranée
+// Hébergé sur Render avec PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Utilisateurs admin ───────────────────────────────────
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String   // bcrypt hash
+  name      String
+  role      String   @default("editor") // "admin" | "editor"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Articles / Actualités ────────────────────────────────
+model Article {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  excerpt     String
+  content     String   // HTML ou Markdown
+  category    String   // segur | logiciel | securite | materiel | sante-num
+  tags        String[] // tableau de slugs
+  author      String   @default("Équipe TechnoSanté")
+  readTime    String   @default("5 min")
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  gradient    String   @default("linear-gradient(135deg, #FDE0D0, #FAC0A0)")
+  accentColor String   @default("#C95C35")
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Services ─────────────────────────────────────────────
+model Service {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique  // cabinets | dentaires | etablissements
+  icon        String
+  title       String
+  subtitle    String
+  description String
+  color       String            // terra | mer | garrigue
+  features    String[]          // liste de bullets
+  href        String
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Contenu de la page détail
+  detail      ServiceDetail?
+}
+
+model ServiceDetail {
+  id           Int             @id @default(autoincrement())
+  serviceId    Int             @unique
+  service      Service         @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  tagline      String
+  intro        String
+  heroGradient String
+  accentColor  String
+  logiciels    String[]
+  cta          String
+  sections     ServiceSection[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}
+
+model ServiceSection {
+  id              Int           @id @default(autoincrement())
+  serviceDetailId Int
+  serviceDetail   ServiceDetail @relation(fields: [serviceDetailId], references: [id], onDelete: Cascade)
+  icon            String
+  title           String
+  description     String
+  points          String[]
+  order           Int           @default(0)
+}
+
+// ─── Pages (contenu éditorial des pages statiques) ────────
+model PageContent {
+  id        Int      @id @default(autoincrement())
+  pageSlug  String   @unique  // home | qui-sommes-nous | assistance
+  blocks    Json     // structure flexible : tableau de blocs { type, content }
+  meta      Json?    // title, description, og image
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+// ─── Médias (images uploadées) ────────────────────────────
+model Media {
+  id        Int      @id @default(autoincrement())
+  filename  String
+  url       String
+  alt       String   @default("")
+  mimeType  String
+  size      Int
+  createdAt DateTime @default(now())
+}
+
+// ─── Paramètres globaux du site ───────────────────────────
+model SiteSetting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String
+}

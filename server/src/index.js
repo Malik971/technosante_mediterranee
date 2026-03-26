@@ -2,9 +2,14 @@ require('dotenv').config()
 
 const express    = require('express')
 const cors       = require('cors')
-const rateLimit  = require('express-rate-limit')
-const contactRouter    = require('./routes/contact')
-const newsletterRouter = require('./routes/newsletter')
+const rateLimit = require('express-rate-limit')
+
+const contactRoutes = require('./routes/contact')
+const newsletterRoutes = require('./routes/newsletter')
+const authRoutes = require('./routes/auth')
+const articlesRoutes = require('./routes/articles')
+const servicesRoutes = require('./routes/services')
+const pagesRoutes = require('./routes/pages')
 
 const app  = express()
 const PORT = process.env.PORT || 3001
@@ -21,15 +26,23 @@ app.use(cors({
 }))
 
 // Rate limiting global — 100 req/15 min par IP
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max:      100,
-  message:  { error: 'Trop de requêtes, réessayez dans 15 minutes.' },
-}))
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Trop de requêtes, réessayez dans 15 minutes.' },
+})
+
+app.use(globalLimiter)
 
 // ── Routes ───────────────────────────────────────────────────
-app.use('/api/contact',    contactRouter)
-app.use('/api/newsletter', newsletterRouter)
+app.use('/api/contact', contactRoutes)
+app.use('/api/newsletter', newsletterRoutes)
+app.use('/api/auth', authRoutes)
+app.use('/api/articles', articlesRoutes)
+app.use('/api/services', servicesRoutes)
+app.use('/api/pages', pagesRoutes)
 
 // Health check
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
