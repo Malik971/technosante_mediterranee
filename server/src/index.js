@@ -19,9 +19,24 @@ app.set('trust proxy', 1)
 // ── Middlewares ───────────────────────────────────────────────
 app.use(express.json({ limit: '10kb' }))
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://technosante-mediterranee.vercel.app',
+  process.env.CLIENT_URL,
+].filter(Boolean)
+
 app.use(cors({
-  origin:      process.env.CLIENT_URL || 'http://localhost:5173',
-  methods:     ['GET', 'POST'],
+  origin: (origin, callback) => {
+    // Autorise Postman / curl / appels serveur à serveur
+    if (!origin) return callback(null, true)
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true)
+    }
+
+    return callback(new Error(`CORS non autorisé pour cette origine : ${origin}`))
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   credentials: false,
 }))
 
