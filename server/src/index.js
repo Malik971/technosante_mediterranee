@@ -1,15 +1,15 @@
 require('dotenv').config()
 
-import express, { json } from 'express'
-import cors from 'cors'
-import rateLimit from 'express-rate-limit'
+const express    = require('express')
+const cors       = require('cors')
+const rateLimit = require('express-rate-limit')
 
-import contactRoutes from './routes/contact'
-import newsletterRoutes from './routes/newsletter'
-import authRoutes from './routes/auth'
-import articlesRoutes from './routes/articles'
-import servicesRoutes from './routes/services'
-import pagesRoutes from './routes/pages'
+const contactRoutes = require('./routes/contact')
+const newsletterRoutes = require('./routes/newsletter')
+const authRoutes = require('./routes/auth')
+const articlesRoutes = require('./routes/articles')
+const servicesRoutes = require('./routes/services')
+const pagesRoutes = require('./routes/pages')
 
 const app  = express()
 const PORT = process.env.PORT || 3001
@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3001
 app.set('trust proxy', 1)
 
 // ── Middlewares ───────────────────────────────────────────────
-app.use(json({ limit: '10kb' }))
+app.use(express.json({ limit: '10kb' }))
 
 const allowedOrigins = [
   'http://localhost:5173',
