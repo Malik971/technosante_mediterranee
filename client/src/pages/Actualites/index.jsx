@@ -1,6 +1,6 @@
-import HeroActualites       from './sections/HeroActualites'
-import GrilleArticlesSection from './sections/GrilleArticlesSection'
-import NewsletterSection     from './sections/NewsletterSection'
+import HeroActualites from "./sections/HeroActualites";
+import GrilleArticlesSection from "./sections/GrilleArticlesSection";
+import NewsletterSection from "./sections/NewsletterSection";
 
 export default function Actualites() {
   return (
@@ -9,5 +9,5 @@ export default function Actualites() {
       <GrilleArticlesSection />
       <NewsletterSection />
     </>
-  )
+  );
 }
