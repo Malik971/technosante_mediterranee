@@ -3,7 +3,15 @@ import { ArrowRight, Calendar, Clock, Rss } from "lucide-react";
 import { Link } from "react-router-dom";
 import Tag from "../../../components/ui/Tag";
 
-const API = import.meta.env.VITE_API_URL || "/api";
+function getApiUrl() {
+  const base = import.meta.env.VITE_API_URL;
+  if (!base || base === "undefined" || base.includes("ton-serveur")) {
+    return "/api";
+  }
+  return base;
+}
+
+const API = getApiUrl();
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString("fr-FR", {
