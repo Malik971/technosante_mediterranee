@@ -129,12 +129,10 @@ router.post("/", contactLimiter, async (req, res) => {
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error("[contact] Erreur envoi email :", err.message);
-    return res
-      .status(500)
-      .json({
-        error:
-          "Erreur lors de l'envoi. Veuillez réessayer ou nous appeler directement.",
-      });
+    return res.status(500).json({
+      error:
+        "Erreur lors de l'envoi. Veuillez réessayer ou nous appeler directement.",
+    });
   }
 });
 
