@@ -188,7 +188,7 @@ export default function ServicesSection() {
             </span>
           </h2>
           <p className="reveal text-ardoise-500 text-lg max-w-xl mx-auto">
-            Du cabinet solo à l'établissement multi-sites — nous couvrons l'intégralité de votre écosystème informatique médical.
+            Du cabinet solo à l'établissement multi-sites nous couvrons l'intégralité de votre écosystème informatique médical.
           </p>
         </div>
 
