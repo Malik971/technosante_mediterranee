@@ -20,9 +20,9 @@ import ServiceDetailPage from "./pages/ServiceDetail";
 // Pages admin
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin";
-import ServicesList from "./pages/Admin/services/ServicesList";
-import ArticlesList from "./pages/Admin/articles/ArticlesList";
-import ArticleEditor from "./pages/Admin/articles/ArticleEditor";
+import ServicesList from "./pages/Admin/Services/ServicesList.jsx";
+import ArticlesList from "./pages/Admin/Articles/ArticlesList.jsx";
+import ArticleEditor from "./pages/Admin/Articles/ArticleEditor.jsx";
 
 // ── Guard : redirige vers /admin/login si pas authentifié ──
 function RequireAuth({ children }) {
