@@ -23,6 +23,7 @@ import AdminDashboard from "./pages/Admin";
 import ArticlesList from "./pages/Admin/articles/ArticlesList.jsx";
 import ArticleEditor from "./pages/Admin/articles/ArticleEditor.jsx";
 import ServicesList from "./pages/Admin/services/ServicesList.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 // ── Guard : redirige vers /admin/login si pas authentifié ──
 function RequireAuth({ children }) {
@@ -46,6 +47,7 @@ function PublicLayout() {
           <Route path="/actualites/:slug" element={<ArticlePage />} />
           <Route path="/assistance" element={<Assistance />} />
           <Route path="/services/:id" element={<ServiceDetailPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

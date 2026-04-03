@@ -58,11 +58,14 @@ export default function ServicesList() {
     try {
       await authFetch(`services/${service.id}`, {
         method: 'PUT',
-        body:   JSON.stringify({
-          title:       service.title,
-          subtitle:    service.subtitle,
+        body: JSON.stringify({
+          title: service.title,
+          subtitle: service.subtitle,
           description: service.description,
-          features:    service.features,
+          features: service.features,
+          slug: service.slug,
+          color: service.color,
+          icon: service.icon,
         }),
       })
       setSaved(service.id)
